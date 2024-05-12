@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent(), contribution: <#T##String#>)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+        SimpleEntry(date: Date(), configuration: configuration , contribution: <#T##String#>)
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
@@ -24,7 +24,7 @@ struct Provider: AppIntentTimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, configuration: configuration , contribution: <#T##String#>)
             entries.append(entry)
         }
 
@@ -35,6 +35,7 @@ struct Provider: AppIntentTimelineProvider {
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationAppIntent
+    var contribution : String
 }
 
 struct widgetEntryView : View {
@@ -42,10 +43,10 @@ struct widgetEntryView : View {
 
     var body: some View {
         VStack {
-            Text("Time:")
+            Text("Github")
             Text(entry.date, style: .time)
 
-            Text("Favorite Emoji:")
+            Text("Contribution:")
             Text(entry.configuration.favoriteEmoji)
         }
         .containerBackground(.fill.tertiary, for: .widget)
